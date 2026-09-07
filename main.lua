@@ -71,30 +71,23 @@ local Config = {
 local Scripts = {
 
 	{
-		description = "Zyphora Hub for Steal a Egg.",
+        description = "Zyphora Hub for Steal a Egg.",
+        name = "Zyphora Hub",
+        game = "Steal a Egg",
+        loadstring = [[
+loadstring(game:HttpGet("https://raw.githubusercontent.com/jdififjhdudis-del/ZZy/refs/heads/main/ZZy.lua"))()
+        ]],
+    },
 
-		name = "Zyphora Hub",
+    {
+        description = "AJJANS New Rift Events script for Steal a Egg.",
+        name = "AJJANS NEW RIET EVENTS",
+        game = "Steal a Egg",
+        loadstring = [[
+loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/36107afd3107e8d841f9d1a69e2465d4.lua"))()
+        ]],
+    },
 
-		game = "Steal a Egg",
-
-		loadstring = [[
-			-- Your supplied Zyphora loader goes here.
-			-- Stored as text; not executed by this Studio version.
-		]],
-	},
-
-	{
-		description = "AJJANS New Riet Events script for Steal a Egg.",
-
-		name = "AJJANS NEW RIET EVENTS",
-
-		game = "Steal a Egg",
-
-		loadstring = [[
-			-- Your supplied AJJANS loader goes here.
-			-- Stored as text; not executed by this Studio version.
-		]],
-	},
 
 	----------------------------------------------------
 	-- ADD NEW SCRIPTS BELOW
