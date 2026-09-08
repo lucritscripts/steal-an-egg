@@ -1591,11 +1591,50 @@ local function CreateScriptCard(
 	Select.MouseButton1Click:Connect(
 		function()
 
+			if type(Data.loadstring) ~= "string" or Data.loadstring:gsub("%s", "") == "" then
+				Notify(
+					"Load failed",
+					Data.name .. " does not have a valid loader."
+				)
+				return
+			end
+
 			Notify(
-				"Script selected",
-				Data.name
-					.. " selected."
+				"Loading script",
+				Data.name .. " is being loaded..."
 			)
+
+			local Loader = loadstring
+
+			if type(Loader) ~= "function" then
+				Notify(
+					"Load failed",
+					"loadstring is not available in this environment."
+				)
+				return
+			end
+
+			local Success, Result = pcall(function()
+				local Chunk, CompileError = Loader(Data.loadstring)
+
+				if not Chunk then
+					error(CompileError or "Unable to compile loader")
+				end
+
+				return Chunk()
+			end)
+
+			if Success then
+				Notify(
+					"Script loaded",
+					Data.name .. " loaded successfully."
+				)
+			else
+				Notify(
+					"Load failed",
+					Data.name .. " failed to load: " .. tostring(Result)
+				)
+			end
 
 		end
 	)
