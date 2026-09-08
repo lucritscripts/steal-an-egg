@@ -88,6 +88,14 @@ loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/36107afd3107e8
         ]],
     },
 
+     {
+        description = "Glazehub for Steal a Egg.",
+        name = "Glazehub",
+        game = "Steal a Egg",
+        loadstring = [[
+loadstring(game:HttpGet("https://raw.githubusercontent.com/GlazeScripts/Fyy-Community/refs/heads/main/Glazehub.lua"))()
+        ]],
+    },
 
 	----------------------------------------------------
 	-- ADD NEW SCRIPTS BELOW
