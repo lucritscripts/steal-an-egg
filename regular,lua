@@ -97,6 +97,16 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/GlazeScripts/Fyy-Comm
         ]],
     },
 
+     {
+        description = "Free Private Server for Steal a Egg.",
+        name = "PrivateServer",
+        game = "Steal a Egg",
+        loadstring = [[
+loadstring(game:HttpGet("https://raw.githubusercontent.com/raw-roblox/PrivateServerBypass/refs/heads/main/lua"))()
+         ]],
+    },
+
+
 	----------------------------------------------------
 	-- ADD NEW SCRIPTS BELOW
 	----------------------------------------------------
