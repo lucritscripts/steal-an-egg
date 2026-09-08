@@ -131,6 +131,16 @@ loadstring(game:HttpGet("https://zeroinhub.com/api/script"))()
 ]],
 	},
 
+{
+		description = "Clover Hub for Steal a Egg.",
+		name = "CloverHub",
+		game = "Steal a Egg",
+
+		loadstring = [[
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Ryuun0x/Clover/refs/heads/main/main.lua"))()
+]],
+	},
+
 }
 
 --------------------------------------------------------
