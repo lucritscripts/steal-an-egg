@@ -312,13 +312,13 @@ local Glow = Instance.new("Frame")
 
 Glow.Name = "Glow"
 
-Glow.Size = UDim2.fromOffset(500, 500)
+Glow.Size = UDim2.fromOffset(360, 360)
 
 Glow.Position = UDim2.new(
 	0.5,
-	-250,
+	-180,
 	0.5,
-	-250
+	-180
 )
 
 Glow.BackgroundColor3 = Config.Theme.Purple
@@ -328,6 +328,37 @@ Glow.BorderSizePixel = 0
 Glow.Parent = Background
 
 Corner(Glow, 500)
+
+-- Soft 3D website-style decorative shapes
+local function AddShape(Size, Position, Rotation, Color, Transparency, Radius)
+	local Shape = Instance.new("Frame")
+	Shape.Size = UDim2.fromOffset(Size, Size)
+	Shape.Position = Position
+	Shape.Rotation = Rotation
+	Shape.BackgroundColor3 = Color
+	Shape.BackgroundTransparency = Transparency
+	Shape.BorderSizePixel = 0
+	Shape.Parent = Background
+	Corner(Shape, Radius or 28)
+
+	local Stroke = Instance.new("UIStroke")
+	Stroke.Color = Color
+	Stroke.Transparency = math.min(Transparency + 0.03, 0.98)
+	Stroke.Thickness = 1
+	Stroke.Parent = Shape
+
+	return Shape
+end
+
+local ShapeA = AddShape(170, UDim2.new(0.08, 0, 0.18, 0), -18, Config.Theme.Primary, 0.93, 38)
+local ShapeB = AddShape(120, UDim2.new(0.82, -60, 0.12, 0), 24, Config.Theme.Purple, 0.94, 32)
+local ShapeC = AddShape(145, UDim2.new(0.80, -30, 0.78, -20), -14, Config.Theme.Cyan, 0.95, 36)
+
+if Config.BackgroundEffects then
+	Tween(ShapeA, {Rotation = -10}, 1.2)
+	Tween(ShapeB, {Rotation = 16}, 1.4)
+	Tween(ShapeC, {Rotation = -6}, 1.6)
+end
 
 --------------------------------------------------------
 -- MAIN WINDOW
@@ -345,9 +376,9 @@ Window.Position = UDim2.fromScale(
 )
 
 Window.Size = UDim2.new(
-	0.82,
+	0.68,
 	0,
-	0.78,
+	0.68,
 	0
 )
 
@@ -396,7 +427,7 @@ Header.Size = UDim2.new(
 	1,
 	0,
 	0,
-	76
+	58
 )
 
 Header.BackgroundTransparency = 1
@@ -409,15 +440,12 @@ Header.Parent = Window
 local Brand = MakeLabel(
 	Header,
 	Config.Brand,
-	20,
+	17,
 	Config.Theme.Text,
 	Enum.Font.GothamBold
 )
 
-Brand.Position = UDim2.fromOffset(
-	25,
-	12
-)
+Brand.Position = UDim2.fromOffset(18, 7)
 
 Brand.Size = UDim2.new(
 	0.5,
@@ -438,10 +466,7 @@ local Subtitle = MakeLabel(
 	Enum.Font.GothamBold
 )
 
-Subtitle.Position = UDim2.fromOffset(
-	26,
-	40
-)
+Subtitle.Position = UDim2.fromOffset(19, 31)
 
 Subtitle.Size = UDim2.new(
 	0.5,
@@ -460,15 +485,12 @@ Status.AnchorPoint = Vector2.new(1, 0.5)
 
 Status.Position = UDim2.new(
 	1,
-	-22,
+	-16,
 	0.5,
 	0
 )
 
-Status.Size = UDim2.fromOffset(
-	170,
-	38
-)
+Status.Size = UDim2.fromOffset(140, 32)
 
 Status.BackgroundColor3 = Config.Theme.Panel2
 Status.BorderSizePixel = 0
@@ -528,17 +550,12 @@ WindowControls.AnchorPoint = Vector2.new(
 	0.5
 )
 
-WindowControls.Position = UDim2.new(
-	1,
-	-205,
+WindowControls.Position = UDim2.new(1, -165,
 	0.5,
 	0
 )
 
-WindowControls.Size = UDim2.fromOffset(
-	72,
-	34
-)
+WindowControls.Size = UDim2.fromOffset(62, 30)
 
 WindowControls.BackgroundTransparency = 1
 
@@ -549,8 +566,7 @@ local ControlsLayout = Instance.new("UIListLayout")
 ControlsLayout.FillDirection =
 	Enum.FillDirection.Horizontal
 
-ControlsLayout.Padding =
-	UDim.new(0, 8)
+ControlsLayout.Padding = UDim.new(0, 6)
 
 ControlsLayout.VerticalAlignment =
 	Enum.VerticalAlignment.Center
@@ -632,17 +648,9 @@ local Content = Instance.new("Frame")
 
 Content.Name = "Content"
 
-Content.Position = UDim2.fromOffset(
-	14,
-	76
-)
+Content.Position = UDim2.fromOffset(12, 58)
 
-Content.Size = UDim2.new(
-	1,
-	-28,
-	1,
-	-90
-)
+Content.Size = UDim2.new(1, -24, 1, -70)
 
 Content.BackgroundTransparency = 1
 
@@ -661,10 +669,7 @@ ToggleButton.Position = UDim2.fromOffset(
 	20
 )
 
-ToggleButton.Size = UDim2.fromOffset(
-	52,
-	52
-)
+ToggleButton.Size = UDim2.fromOffset(40, 40)
 
 ToggleButton.BackgroundColor3 =
 	Config.Theme.Panel
@@ -700,7 +705,7 @@ local MinimizedWindowSize = UDim2.new(
 	FullWindowSize.X.Scale,
 	FullWindowSize.X.Offset,
 	0,
-	76
+	40
 )
 
 local function ApplyWindowState()
@@ -780,10 +785,7 @@ local Sidebar = Instance.new("Frame")
 
 Sidebar.Name = "Sidebar"
 
-Sidebar.Size = UDim2.fromOffset(
-	150,
-	0
-)
+Sidebar.Size = UDim2.fromOffset(128, 0)
 
 Sidebar.BackgroundColor3 =
 	Config.Theme.Panel2
@@ -830,13 +832,12 @@ local Pages = Instance.new("Frame")
 
 Pages.Name = "Pages"
 
-Pages.Position =
-	UDim2.fromOffset(162, 0)
+Pages.Position = UDim2.fromOffset(140, 0)
 
 Pages.Size =
 	UDim2.new(
 		1,
-		-162,
+		-140,
 		1,
 		0
 	)
@@ -2968,12 +2969,12 @@ local function UpdateScale()
 	if Viewport.X < 600 then
 
 		ResponsiveScale.Scale =
-			0.70
+			0.62
 
 	elseif Viewport.X < 850 then
 
 		ResponsiveScale.Scale =
-			0.84
+			0.78
 
 	else
 
