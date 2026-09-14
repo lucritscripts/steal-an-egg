@@ -26,7 +26,6 @@ That's it.
 
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
-local UserInputService = game:GetService("UserInputService")
 
 local Player = Players.LocalPlayer
 
@@ -334,9 +333,9 @@ Window.Position =
 
 Window.Size =
 	UDim2.new(
-		0.82,
+		0.72,
 		0,
-		0.78,
+		0.74,
 		0
 	)
 
@@ -669,17 +668,17 @@ local function ApplyWindowState()
 	end
 end
 
-MinimizeButton.MouseButton1Click:Connect(function()
+MinimizeButton.Activated:Connect(function()
 	State.Minimized = not State.Minimized
 	ApplyWindowState()
 end)
 
-CloseButton.MouseButton1Click:Connect(function()
+CloseButton.Activated:Connect(function()
 	State.Closed = true
 	ApplyWindowState()
 end)
 
-ToggleButton.MouseButton1Click:Connect(function()
+ToggleButton.Activated:Connect(function()
 	State.Closed = false
 	ApplyWindowState()
 end)
@@ -691,7 +690,7 @@ end)
 local Sidebar = Instance.new("Frame")
 
 Sidebar.Size =
-	UDim2.fromOffset(150, 0)
+	UDim2.new(0, 150, 1, 0)
 
 Sidebar.BackgroundColor3 =
 	Config.Theme.Panel2
@@ -1703,7 +1702,7 @@ local function CreateScriptCard(
 		end
 	)
 
-	Favorite.MouseButton1Click:Connect(
+	Favorite.Activated:Connect(
 		function()
 
 			ToggleFavorite(Data)
@@ -1807,7 +1806,7 @@ local function CreateScriptCard(
 		end
 	)
 
-	Select.MouseButton1Click:Connect(
+	Select.Activated:Connect(
 		function()
 
 			if type(Data.loadstring) ~= "string" or Data.loadstring:gsub("%s", "") == "" then
@@ -2204,7 +2203,7 @@ for Index, Item in
 		end
 	)
 
-	Button.MouseButton1Click:Connect(
+	Button.Activated:Connect(
 		function()
 			Navigate(Item.Name)
 		end
@@ -2308,7 +2307,7 @@ local AnimationButton =
 		"Animations: ON"
 	)
 
-AnimationButton.MouseButton1Click:Connect(
+AnimationButton.Activated:Connect(
 	function()
 
 		State.Animations =
@@ -2335,7 +2334,7 @@ local EffectsButton =
 		"Background Effects: ON"
 	)
 
-EffectsButton.MouseButton1Click:Connect(
+EffectsButton.Activated:Connect(
 	function()
 
 		State.Effects =
@@ -2365,7 +2364,7 @@ local SoundButton =
 		"Sound Effects: OFF"
 	)
 
-SoundButton.MouseButton1Click:Connect(
+SoundButton.Activated:Connect(
 	function()
 
 		State.Sound =
@@ -2392,7 +2391,7 @@ local ScaleButton =
 		"UI Scale: 100%"
 	)
 
-ScaleButton.MouseButton1Click:Connect(
+ScaleButton.Activated:Connect(
 	function()
 
 		State.Scale += 0.1
@@ -2444,7 +2443,7 @@ local ResetButton =
 		"Reset UI Settings"
 	)
 
-ResetButton.MouseButton1Click:Connect(
+ResetButton.Activated:Connect(
 	function()
 
 		State.Animations = true
@@ -2582,57 +2581,6 @@ InfoText.TextYAlignment =
 	Enum.TextYAlignment.Top
 
 --------------------------------------------------------
--- RESPONSIVE UI
---------------------------------------------------------
-
-local ResponsiveScale =
-	Instance.new("UIScale")
-
-ResponsiveScale.Name =
-	"ResponsiveScale"
-
-ResponsiveScale.Parent =
-	Window
-
-local function UpdateScale()
-
-	local Camera =
-		workspace.CurrentCamera
-
-	if not Camera then
-		return
-	end
-
-	local Viewport =
-		Camera.ViewportSize
-
-	if Viewport.X < 600 then
-
-		ResponsiveScale.Scale =
-			0.70
-
-	elseif Viewport.X < 850 then
-
-		ResponsiveScale.Scale =
-			0.84
-
-	else
-
-		ResponsiveScale.Scale =
-			1
-
-	end
-end
-
-workspace.CurrentCamera:
-	GetPropertyChangedSignal(
-		"ViewportSize"
-	):
-	Connect(UpdateScale)
-
-UpdateScale()
-
---------------------------------------------------------
 -- DRAGGING
 --------------------------------------------------------
 
@@ -2671,8 +2619,10 @@ Window.InputBegan:Connect(
 				Input.Position.Y
 			)
 
-		if IsInteractive(HitObjects[1]) then
-			return
+		for _, HitObject in ipairs(HitObjects) do
+			if IsInteractive(HitObject) then
+				return
+			end
 		end
 
 		Dragging = true
@@ -2699,7 +2649,7 @@ Window.InputEnded:Connect(
 	end
 )
 
-UserInputService.InputChanged:Connect(
+Window.InputChanged:Connect(
 	function(Input)
 
 		if not Dragging then
@@ -2820,3 +2770,4 @@ task.delay(
 
 	end
 )
+
