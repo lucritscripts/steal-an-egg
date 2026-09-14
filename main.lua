@@ -106,6 +106,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/raw-roblox/PrivateSer
          ]],
     },
 
+      {
         description = "zeroinhub for Steal a Egg.",
         name = "zeroinhub",
         game = "Steal a Egg",
