@@ -27,7 +27,36 @@ That's it.
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 
-local Player = Players.LocalPlayer
+-- Delta/executor-safe client startup.
+-- This still uses the local player; the extra fallbacks only choose where the GUI is parented.
+local Player = Players.LocalPlayer or Players.PlayerAdded:Wait()
+local PlayerGui = Player:WaitForChild("PlayerGui")
+
+local GuiParent = PlayerGui
+local GetHui = rawget(_G, "gethui")
+
+if type(GetHui) == "function" then
+	local ok, hui = pcall(GetHui)
+	if ok and hui then
+		GuiParent = hui
+	end
+end
+
+local function RemoveOldGui(parent)
+	if not parent then
+		return
+	end
+
+	local Old = parent:FindFirstChild("LucritScripts")
+	if Old then
+		Old:Destroy()
+	end
+end
+
+RemoveOldGui(PlayerGui)
+if GuiParent ~= PlayerGui then
+	RemoveOldGui(GuiParent)
+end
 
 --------------------------------------------------------
 -- CONFIG
@@ -159,7 +188,11 @@ Gui.Name = "LucritScripts"
 Gui.ResetOnSpawn = false
 Gui.IgnoreGuiInset = true
 Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-Gui.Parent = Player:WaitForChild("PlayerGui")
+Gui.DisplayOrder = 100
+Gui.Enabled = true
+Gui.Parent = GuiParent
+Gui.Enabled = true
+Gui.DisplayOrder = 999999
 
 --------------------------------------------------------
 -- HELPER FUNCTIONS
@@ -2584,8 +2617,6 @@ InfoText.TextYAlignment =
 -- DRAGGING
 --------------------------------------------------------
 
-local PlayerGui = Player:WaitForChild("PlayerGui")
-
 local function IsInteractive(HitObject)
 
 	if not HitObject then
@@ -2728,6 +2759,10 @@ task.spawn(
 --------------------------------------------------------
 -- OPEN ANIMATION
 --------------------------------------------------------
+
+Window.Visible = true
+Background.Visible = true
+Content.Visible = true
 
 local OriginalSize =
 	Window.Size
