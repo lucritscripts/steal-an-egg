@@ -1,30 +1,24 @@
---[[
+--[==[
 ========================================================
         LUCRIT SCRIPTS — STEAL A EGG HUB
         PREMIUM SINGLE-FILE SCRIPT HUB
 ========================================================
 
-Safe script-library version.
+HOW TO ADD A SCRIPT:
 
-Features:
-• Home
-• Scripts
-• Favorites
-• Settings
-• Info
-• Search
-• Notifications
-• Responsive scaling
-• Dragging
-• Minimize / restore
-• Close / reopen
-• Favorites
-• Animated background
-• Local ModuleScript execution
-• Defensive error handling
+{
+    description = "Your description",
+    name = "Your Script Name",
+    game = "Your Game",
+    loadstring = [[
+        paste your supplied loader here
+    ]],
+},
+
+That's it.
 
 ========================================================
-]]
+]==]
 
 --------------------------------------------------------
 -- SERVICES
@@ -36,12 +30,6 @@ local UserInputService = game:GetService("UserInputService")
 
 local Player = Players.LocalPlayer
 
-if not Player then
-	return
-end
-
-local PlayerGui = Player:WaitForChild("PlayerGui")
-
 --------------------------------------------------------
 -- CONFIG
 --------------------------------------------------------
@@ -49,7 +37,7 @@ local PlayerGui = Player:WaitForChild("PlayerGui")
 local Config = {
 	Brand = "LUCRIT SCRIPTS",
 	Subtitle = "STEAL A EGG HUB",
-	Version = "1.2.0",
+	Version = "1.0.0",
 
 	Theme = {
 		Background = Color3.fromRGB(6, 7, 11),
@@ -66,7 +54,6 @@ local Config = {
 
 		Success = Color3.fromRGB(70, 220, 135),
 		Warning = Color3.fromRGB(255, 190, 70),
-		Danger = Color3.fromRGB(255, 90, 90),
 
 		Border = Color3.fromRGB(42, 47, 63),
 	},
@@ -76,55 +63,71 @@ local Config = {
 }
 
 --------------------------------------------------------
--- SCRIPT DATABASE
+-- ⭐ SCRIPT DATABASE
+--
+-- ONLY EDIT THIS SECTION
 --------------------------------------------------------
-
--- Put your own ModuleScripts in ReplicatedStorage > LucritScripts > Modules.
--- Each ModuleScript should return a function.
 
 local Scripts = {
 
 	{
-		description = "Zyphora Hub for Steal a Egg.",
-		name = "Zyphora Hub",
-		game = "Steal a Egg",
-		module = "ZyphoraHub",
-	},
+        description = "Zyphora Hub for Steal a Egg.",
+        name = "Zyphora Hub",
+        game = "Steal a Egg",
+        loadstring = [[
+loadstring(game:HttpGet("https://raw.githubusercontent.com/jdififjhdudis-del/ZZy/refs/heads/main/ZZy.lua"))()
+        ]],
+    },
 
-	{
-		description = "AJJANS New Rift Events script for Steal a Egg.",
-		name = "AJJANS NEW RIET EVENTS",
-		game = "Steal a Egg",
-		module = "AJJANSNewRiftEvents",
-	},
+    {
+        description = "AJJANS New Rift Events script for Steal a Egg.",
+        name = "AJJANS NEW RIET EVENTS",
+        game = "Steal a Egg",
+        loadstring = [[
+loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/36107afd3107e8d841f9d1a69e2465d4.lua"))()
+        ]],
+    },
 
-	{
-		description = "Glazehub for Steal a Egg.",
-		name = "Glazehub",
-		game = "Steal a Egg",
-		module = "Glazehub",
-	},
+     {
+        description = "Glazehub for Steal a Egg.",
+        name = "Glazehub",
+        game = "Steal a Egg",
+        loadstring = [[
+loadstring(game:HttpGet("https://raw.githubusercontent.com/GlazeScripts/Fyy-Community/refs/heads/main/Glazehub.lua"))()
+        ]],
+    },
 
-	{
-		description = "Free Private Server for Steal a Egg.",
-		name = "PrivateServer",
-		game = "Steal a Egg",
-		module = "PrivateServer",
-	},
+     {
+        description = "Free Private Server for Steal a Egg.",
+        name = "PrivateServer",
+        game = "Steal a Egg",
+        loadstring = [[
+loadstring(game:HttpGet("https://raw.githubusercontent.com/raw-roblox/PrivateServerBypass/refs/heads/main/lua"))()
+         ]],
+    },
 
-	{
-		description = "zeroinhub for Steal a Egg.",
-		name = "zeroinhub",
-		game = "Steal a Egg",
-		module = "ZeroinHub",
-	},
+      {
+        description = "zeroinhub for Steal a Egg.",
+        name = "zeroinhub",
+        game = "Steal a Egg",
+        loadstring = [[
+loadstring(game:HttpGet("https://zeroinhub.com/api/script"))()
+         ]],
+    },
 
-{
-		description = "Clover Hub for Steal a Egg.",
-		name = "CloverHub",
-		game = "Steal a Egg",
-		module = "CloverHub",
-	},
+
+	----------------------------------------------------
+	-- ADD NEW SCRIPTS BELOW
+	----------------------------------------------------
+	--
+	-- {
+	--     description = "My new script description.",
+	--     name = "My New Script",
+	--     game = "Steal a Egg",
+	--     loadstring = [[
+	--         your supplied loader here
+	--     ]],
+	-- },
 
 }
 
@@ -149,16 +152,6 @@ local State = {
 }
 
 --------------------------------------------------------
--- REMOVE OLD GUI
---------------------------------------------------------
-
-local Existing = PlayerGui:FindFirstChild("LucritScripts")
-
-if Existing then
-	Existing:Destroy()
-end
-
---------------------------------------------------------
 -- GUI
 --------------------------------------------------------
 
@@ -167,16 +160,18 @@ Gui.Name = "LucritScripts"
 Gui.ResetOnSpawn = false
 Gui.IgnoreGuiInset = true
 Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-Gui.DisplayOrder = 999
-Gui.Parent = PlayerGui
+Gui.Parent = Player:WaitForChild("PlayerGui")
 
 --------------------------------------------------------
--- HELPERS
+-- HELPER FUNCTIONS
 --------------------------------------------------------
 
 local function Corner(Object, Radius)
 	local CornerObject = Instance.new("UICorner")
-	CornerObject.CornerRadius = UDim.new(0, Radius or 10)
+
+	CornerObject.CornerRadius =
+		UDim.new(0, Radius or 10)
+
 	CornerObject.Parent = Object
 
 	return CornerObject
@@ -195,15 +190,9 @@ local function AddStroke(Object, Transparency)
 end
 
 local function Tween(Object, Properties, Duration)
-	if not Object or not Object.Parent then
-		return
-	end
-
 	if not State.Animations then
 		for Property, Value in pairs(Properties) do
-			pcall(function()
-				Object[Property] = Value
-			end)
+			Object[Property] = Value
 		end
 
 		return
@@ -215,18 +204,15 @@ local function Tween(Object, Properties, Duration)
 		Enum.EasingDirection.Out
 	)
 
-	local Success, Animation = pcall(function()
-		return TweenService:Create(
-			Object,
-			Info,
-			Properties
-		)
-	end)
+	local Animation = TweenService:Create(
+		Object,
+		Info,
+		Properties
+	)
 
-	if Success and Animation then
-		Animation:Play()
-		return Animation
-	end
+	Animation:Play()
+
+	return Animation
 end
 
 local function MakeLabel(
@@ -236,16 +222,26 @@ local function MakeLabel(
 	TextColor,
 	Font
 )
+
 	local Label = Instance.new("TextLabel")
 
 	Label.BackgroundTransparency = 1
-	Label.Text = tostring(Text or "")
-	Label.TextColor3 = TextColor or Config.Theme.Text
-	Label.TextSize = TextSize or 13
-	Label.Font = Font or Enum.Font.Gotham
 
-	Label.TextXAlignment = Enum.TextXAlignment.Left
-	Label.TextYAlignment = Enum.TextYAlignment.Center
+	Label.Text = Text
+
+	Label.TextColor3 =
+		TextColor or Config.Theme.Text
+
+	Label.TextSize = TextSize or 13
+
+	Label.Font =
+		Font or Enum.Font.Gotham
+
+	Label.TextXAlignment =
+		Enum.TextXAlignment.Left
+
+	Label.TextYAlignment =
+		Enum.TextYAlignment.Center
 
 	Label.Parent = Parent
 
@@ -258,10 +254,14 @@ end
 
 local Background = Instance.new("Frame")
 
-Background.Name = "Background"
-Background.Size = UDim2.fromScale(1, 1)
-Background.BackgroundColor3 = Config.Theme.Background
+Background.Size =
+	UDim2.fromScale(1, 1)
+
+Background.BackgroundColor3 =
+	Config.Theme.Background
+
 Background.BackgroundTransparency = 0.5
+
 Background.BorderSizePixel = 0
 
 Background.Parent = Gui
@@ -270,22 +270,25 @@ local BackgroundGradient = Instance.new("UIGradient")
 
 BackgroundGradient.Rotation = 135
 
-BackgroundGradient.Color = ColorSequence.new({
-	ColorSequenceKeypoint.new(
-		0,
-		Color3.fromRGB(7, 8, 14)
-	),
+BackgroundGradient.Color =
+	ColorSequence.new({
 
-	ColorSequenceKeypoint.new(
-		0.5,
-		Color3.fromRGB(10, 12, 20)
-	),
+		ColorSequenceKeypoint.new(
+			0,
+			Color3.fromRGB(7, 8, 14)
+		),
 
-	ColorSequenceKeypoint.new(
-		1,
-		Color3.fromRGB(7, 7, 13)
-	),
-})
+		ColorSequenceKeypoint.new(
+			0.5,
+			Color3.fromRGB(10, 12, 20)
+		),
+
+		ColorSequenceKeypoint.new(
+			1,
+			Color3.fromRGB(7, 7, 13)
+		),
+
+	})
 
 BackgroundGradient.Parent = Background
 
@@ -295,55 +298,27 @@ BackgroundGradient.Parent = Background
 
 local Glow = Instance.new("Frame")
 
-Glow.Name = "Glow"
+Glow.Size =
+	UDim2.fromOffset(500, 500)
 
-Glow.Size = UDim2.fromOffset(360, 360)
+Glow.Position =
+	UDim2.new(
+		0.5,
+		-250,
+		0.5,
+		-250
+	)
 
-Glow.Position = UDim2.new(
-	0.5,
-	-180,
-	0.5,
-	-180
-)
+Glow.BackgroundColor3 =
+	Config.Theme.Purple
 
-Glow.BackgroundColor3 = Config.Theme.Purple
 Glow.BackgroundTransparency = 0.94
+
 Glow.BorderSizePixel = 0
 
 Glow.Parent = Background
 
 Corner(Glow, 500)
-
--- Soft 3D website-style decorative shapes
-local function AddShape(Size, Position, Rotation, Color, Transparency, Radius)
-	local Shape = Instance.new("Frame")
-	Shape.Size = UDim2.fromOffset(Size, Size)
-	Shape.Position = Position
-	Shape.Rotation = Rotation
-	Shape.BackgroundColor3 = Color
-	Shape.BackgroundTransparency = Transparency
-	Shape.BorderSizePixel = 0
-	Shape.Parent = Background
-	Corner(Shape, Radius or 28)
-
-	local Stroke = Instance.new("UIStroke")
-	Stroke.Color = Color
-	Stroke.Transparency = math.min(Transparency + 0.03, 0.98)
-	Stroke.Thickness = 1
-	Stroke.Parent = Shape
-
-	return Shape
-end
-
-local ShapeA = AddShape(170, UDim2.new(0.08, 0, 0.18, 0), -18, Config.Theme.Primary, 0.93, 38)
-local ShapeB = AddShape(120, UDim2.new(0.82, -60, 0.12, 0), 24, Config.Theme.Purple, 0.94, 32)
-local ShapeC = AddShape(145, UDim2.new(0.80, -30, 0.78, -20), -14, Config.Theme.Cyan, 0.95, 36)
-
-if Config.BackgroundEffects then
-	Tween(ShapeA, {Rotation = -10}, 1.2)
-	Tween(ShapeB, {Rotation = 16}, 1.4)
-	Tween(ShapeC, {Rotation = -6}, 1.6)
-end
 
 --------------------------------------------------------
 -- MAIN WINDOW
@@ -351,31 +326,31 @@ end
 
 local Window = Instance.new("Frame")
 
-Window.Name = "Window"
+Window.AnchorPoint =
+	Vector2.new(0.5, 0.5)
 
-Window.AnchorPoint = Vector2.new(0.5, 0.5)
+Window.Position =
+	UDim2.fromScale(0.5, 0.5)
 
-Window.Position = UDim2.fromScale(
-	0.5,
-	0.5
-)
+Window.Size =
+	UDim2.new(
+		0.82,
+		0,
+		0.78,
+		0
+	)
 
-Window.Size = UDim2.new(
-	0.68,
-	0,
-	0.68,
-	0
-)
+Window.BackgroundColor3 =
+	Config.Theme.Panel
 
-Window.BackgroundColor3 = Config.Theme.Panel
 Window.BackgroundTransparency = 0.03
-Window.BorderSizePixel = 0
 
-Window.ClipsDescendants = true
+Window.BorderSizePixel = 0
 
 Window.Parent = Gui
 
 Corner(Window, 17)
+
 AddStroke(Window, 0.2)
 
 --------------------------------------------------------
@@ -386,17 +361,20 @@ local WindowGradient = Instance.new("UIGradient")
 
 WindowGradient.Rotation = 135
 
-WindowGradient.Color = ColorSequence.new({
-	ColorSequenceKeypoint.new(
-		0,
-		Color3.fromRGB(17, 20, 30)
-	),
+WindowGradient.Color =
+	ColorSequence.new({
 
-	ColorSequenceKeypoint.new(
-		1,
-		Color3.fromRGB(9, 11, 17)
-	),
-})
+		ColorSequenceKeypoint.new(
+			0,
+			Color3.fromRGB(17, 20, 30)
+		),
+
+		ColorSequenceKeypoint.new(
+			1,
+			Color3.fromRGB(9, 11, 17)
+		),
+
+	})
 
 WindowGradient.Parent = Window
 
@@ -406,42 +384,26 @@ WindowGradient.Parent = Window
 
 local Header = Instance.new("Frame")
 
-Header.Name = "Header"
-
-Header.Size = UDim2.new(
-	1,
-	0,
-	0,
-	58
-)
+Header.Size =
+	UDim2.new(1, 0, 0, 76)
 
 Header.BackgroundTransparency = 1
-Header.Parent = Window
 
---------------------------------------------------------
--- BRAND
---------------------------------------------------------
+Header.Parent = Window
 
 local Brand = MakeLabel(
 	Header,
 	Config.Brand,
-	17,
+	20,
 	Config.Theme.Text,
 	Enum.Font.GothamBold
 )
 
-Brand.Position = UDim2.fromOffset(18, 7)
+Brand.Position =
+	UDim2.fromOffset(25, 12)
 
-Brand.Size = UDim2.new(
-	0.5,
-	0,
-	0,
-	30
-)
-
---------------------------------------------------------
--- SUBTITLE
---------------------------------------------------------
+Brand.Size =
+	UDim2.new(0.5, 0, 0, 30)
 
 local Subtitle = MakeLabel(
 	Header,
@@ -451,14 +413,11 @@ local Subtitle = MakeLabel(
 	Enum.Font.GothamBold
 )
 
-Subtitle.Position = UDim2.fromOffset(19, 31)
+Subtitle.Position =
+	UDim2.fromOffset(26, 40)
 
-Subtitle.Size = UDim2.new(
-	0.5,
-	0,
-	0,
-	20
-)
+Subtitle.Size =
+	UDim2.new(0.5, 0, 0, 20)
 
 --------------------------------------------------------
 -- STATUS
@@ -466,38 +425,37 @@ Subtitle.Size = UDim2.new(
 
 local Status = Instance.new("Frame")
 
-Status.AnchorPoint = Vector2.new(1, 0.5)
+Status.AnchorPoint =
+	Vector2.new(1, 0.5)
 
-Status.Position = UDim2.new(
-	1,
-	-16,
-	0.5,
-	0
-)
+Status.Position =
+	UDim2.new(1, -22, 0.5, 0)
 
-Status.Size = UDim2.fromOffset(140, 32)
+Status.Size =
+	UDim2.fromOffset(210, 38)
 
-Status.BackgroundColor3 = Config.Theme.Panel2
+Status.BackgroundColor3 =
+	Config.Theme.Panel2
+
 Status.BorderSizePixel = 0
 
 Status.Parent = Header
 
 Corner(Status, 10)
+
 AddStroke(Status, 0.3)
 
 local StatusDot = Instance.new("Frame")
 
-StatusDot.Position = UDim2.fromOffset(
-	13,
-	15
-)
+StatusDot.Position =
+	UDim2.fromOffset(13, 15)
 
-StatusDot.Size = UDim2.fromOffset(
-	8,
-	8
-)
+StatusDot.Size =
+	UDim2.fromOffset(8, 8)
 
-StatusDot.BackgroundColor3 = Config.Theme.Success
+StatusDot.BackgroundColor3 =
+	Config.Theme.Success
+
 StatusDot.BorderSizePixel = 0
 
 StatusDot.Parent = Status
@@ -512,35 +470,26 @@ local StatusLabel = MakeLabel(
 	Enum.Font.GothamMedium
 )
 
-StatusLabel.Position = UDim2.fromOffset(
-	29,
-	0
-)
+StatusLabel.Position =
+	UDim2.fromOffset(29, 0)
 
-StatusLabel.Size = UDim2.new(
-	1,
-	-35,
-	1,
-	0
-)
+StatusLabel.Size =
+	UDim2.new(1, -35, 1, 0)
 
 --------------------------------------------------------
--- WINDOW CONTROLS
+-- WINDOW CONTROLS (minimize / close)
 --------------------------------------------------------
 
 local WindowControls = Instance.new("Frame")
 
-WindowControls.AnchorPoint = Vector2.new(
-	1,
-	0.5
-)
+WindowControls.AnchorPoint =
+	Vector2.new(1, 0.5)
 
-WindowControls.Position = UDim2.new(1, -165,
-	0.5,
-	0
-)
+WindowControls.Position =
+	UDim2.new(1, -320, 0.5, 0)
 
-WindowControls.Size = UDim2.fromOffset(62, 30)
+WindowControls.Size =
+	UDim2.fromOffset(72, 34)
 
 WindowControls.BackgroundTransparency = 1
 
@@ -551,23 +500,20 @@ local ControlsLayout = Instance.new("UIListLayout")
 ControlsLayout.FillDirection =
 	Enum.FillDirection.Horizontal
 
-ControlsLayout.Padding = UDim.new(0, 6)
+ControlsLayout.Padding =
+	UDim.new(0, 8)
 
 ControlsLayout.VerticalAlignment =
 	Enum.VerticalAlignment.Center
 
 ControlsLayout.Parent = WindowControls
 
-local function ControlButton(
-	Text,
-	TextColor
-)
+local function ControlButton(Text, TextColor)
+
 	local Button = Instance.new("TextButton")
 
-	Button.Size = UDim2.fromOffset(
-		32,
-		32
-	)
+	Button.Size =
+		UDim2.fromOffset(32, 32)
 
 	Button.BackgroundColor3 =
 		Config.Theme.Panel2
@@ -589,28 +535,15 @@ local function ControlButton(
 	Button.Parent = WindowControls
 
 	Corner(Button, 9)
+
 	AddStroke(Button, 0.35)
 
 	Button.MouseEnter:Connect(function()
-		Tween(
-			Button,
-			{
-				BackgroundColor3 =
-					Config.Theme.Panel3
-			},
-			0.15
-		)
+		Tween(Button, { BackgroundColor3 = Config.Theme.Panel3 }, 0.15)
 	end)
 
 	Button.MouseLeave:Connect(function()
-		Tween(
-			Button,
-			{
-				BackgroundColor3 =
-					Config.Theme.Panel2
-			},
-			0.15
-		)
+		Tween(Button, { BackgroundColor3 = Config.Theme.Panel2 }, 0.15)
 	end)
 
 	return Button
@@ -620,10 +553,7 @@ local MinimizeButton =
 	ControlButton("–")
 
 local CloseButton =
-	ControlButton(
-		"×",
-		Config.Theme.Warning
-	)
+	ControlButton("×", Config.Theme.Warning)
 
 --------------------------------------------------------
 -- CONTENT
@@ -631,30 +561,32 @@ local CloseButton =
 
 local Content = Instance.new("Frame")
 
-Content.Name = "Content"
+Content.Position =
+	UDim2.fromOffset(14, 76)
 
-Content.Position = UDim2.fromOffset(12, 58)
-
-Content.Size = UDim2.new(1, -24, 1, -70)
+Content.Size =
+	UDim2.new(
+		1,
+		-28,
+		1,
+		-90
+	)
 
 Content.BackgroundTransparency = 1
 
 Content.Parent = Window
 
 --------------------------------------------------------
--- TOGGLE BUTTON
+-- FLOATING TOGGLE (shown when the hub is closed)
 --------------------------------------------------------
 
 local ToggleButton = Instance.new("TextButton")
 
-ToggleButton.Name = "ToggleButton"
+ToggleButton.Position =
+	UDim2.fromOffset(20, 20)
 
-ToggleButton.Position = UDim2.fromOffset(
-	20,
-	20
-)
-
-ToggleButton.Size = UDim2.fromOffset(40, 40)
+ToggleButton.Size =
+	UDim2.fromOffset(52, 52)
 
 ToggleButton.BackgroundColor3 =
 	Config.Theme.Panel
@@ -678,10 +610,19 @@ ToggleButton.Visible = false
 ToggleButton.Parent = Gui
 
 Corner(ToggleButton, 26)
+
 AddStroke(ToggleButton, 0.2)
 
+ToggleButton.MouseEnter:Connect(function()
+	Tween(ToggleButton, { BackgroundColor3 = Config.Theme.Panel2 }, 0.15)
+end)
+
+ToggleButton.MouseLeave:Connect(function()
+	Tween(ToggleButton, { BackgroundColor3 = Config.Theme.Panel }, 0.15)
+end)
+
 --------------------------------------------------------
--- WINDOW STATE
+-- WINDOW STATE (open / minimize / close)
 --------------------------------------------------------
 
 local FullWindowSize = Window.Size
@@ -690,7 +631,7 @@ local MinimizedWindowSize = UDim2.new(
 	FullWindowSize.X.Scale,
 	FullWindowSize.X.Offset,
 	0,
-	40
+	Header.Size.Y.Offset
 )
 
 local function ApplyWindowState()
@@ -704,21 +645,15 @@ local function ApplyWindowState()
 		return
 	end
 
-	Window.Visible = true
 	ToggleButton.Visible = false
+	Window.Visible = true
 
 	if State.Minimized then
 
 		Content.Visible = false
 		Background.Visible = false
 
-		Tween(
-			Window,
-			{
-				Size = MinimizedWindowSize
-			},
-			0.25
-		)
+		Tween(Window, { Size = MinimizedWindowSize }, 0.25)
 
 		MinimizeButton.Text = "+"
 
@@ -727,13 +662,7 @@ local function ApplyWindowState()
 		Content.Visible = true
 		Background.Visible = true
 
-		Tween(
-			Window,
-			{
-				Size = FullWindowSize
-			},
-			0.25
-		)
+		Tween(Window, { Size = FullWindowSize }, 0.25)
 
 		MinimizeButton.Text = "–"
 
@@ -741,24 +670,17 @@ local function ApplyWindowState()
 end
 
 MinimizeButton.MouseButton1Click:Connect(function()
-
-	State.Minimized =
-		not State.Minimized
-
+	State.Minimized = not State.Minimized
 	ApplyWindowState()
 end)
 
 CloseButton.MouseButton1Click:Connect(function()
-
 	State.Closed = true
-
 	ApplyWindowState()
 end)
 
 ToggleButton.MouseButton1Click:Connect(function()
-
 	State.Closed = false
-
 	ApplyWindowState()
 end)
 
@@ -768,9 +690,8 @@ end)
 
 local Sidebar = Instance.new("Frame")
 
-Sidebar.Name = "Sidebar"
-
-Sidebar.Size = UDim2.fromOffset(128, 0)
+Sidebar.Size =
+	UDim2.fromOffset(150, 0)
 
 Sidebar.BackgroundColor3 =
 	Config.Theme.Panel2
@@ -780,10 +701,10 @@ Sidebar.BorderSizePixel = 0
 Sidebar.Parent = Content
 
 Corner(Sidebar, 12)
+
 AddStroke(Sidebar, 0.35)
 
-local SidebarPadding =
-	Instance.new("UIPadding")
+local SidebarPadding = Instance.new("UIPadding")
 
 SidebarPadding.PaddingTop =
 	UDim.new(0, 10)
@@ -794,11 +715,9 @@ SidebarPadding.PaddingLeft =
 SidebarPadding.PaddingRight =
 	UDim.new(0, 9)
 
-SidebarPadding.Parent =
-	Sidebar
+SidebarPadding.Parent = Sidebar
 
-local SidebarLayout =
-	Instance.new("UIListLayout")
+local SidebarLayout = Instance.new("UIListLayout")
 
 SidebarLayout.Padding =
 	UDim.new(0, 6)
@@ -806,23 +725,21 @@ SidebarLayout.Padding =
 SidebarLayout.SortOrder =
 	Enum.SortOrder.LayoutOrder
 
-SidebarLayout.Parent =
-	Sidebar
+SidebarLayout.Parent = Sidebar
 
 --------------------------------------------------------
--- PAGES
+-- PAGE CONTAINER
 --------------------------------------------------------
 
 local Pages = Instance.new("Frame")
 
-Pages.Name = "Pages"
-
-Pages.Position = UDim2.fromOffset(140, 0)
+Pages.Position =
+	UDim2.fromOffset(162, 0)
 
 Pages.Size =
 	UDim2.new(
 		1,
-		-140,
+		-162,
 		1,
 		0
 	)
@@ -830,6 +747,10 @@ Pages.Size =
 Pages.BackgroundTransparency = 1
 
 Pages.Parent = Content
+
+--------------------------------------------------------
+-- PAGES
+--------------------------------------------------------
 
 local PageObjects = {}
 
@@ -927,7 +848,7 @@ PageTitle(
 PageTitle(
 	ScriptsPage,
 	"Scripts",
-	"Browse available local resources."
+	"Browse available resources."
 )
 
 PageTitle(
@@ -973,6 +894,7 @@ HomeCard.BorderSizePixel = 0
 HomeCard.Parent = HomePage
 
 Corner(HomeCard, 14)
+
 AddStroke(HomeCard, 0.3)
 
 local HomeTitle = MakeLabel(
@@ -1034,9 +956,9 @@ HomeText.Size =
 
 local Stats = MakeLabel(
 	HomeCard,
-	"● ONLINE     •     SCRIPTS "
+	"● ONLINE     •     SCRIPTS  "
 		.. tostring(#Scripts)
-		.. "     •     VERSION "
+		.. "     •     VERSION  "
 		.. Config.Version,
 	11,
 	Config.Theme.Success,
@@ -1055,7 +977,7 @@ Stats.Size =
 	)
 
 --------------------------------------------------------
--- SEARCH
+-- SEARCH BAR
 --------------------------------------------------------
 
 local Search = Instance.new("TextBox")
@@ -1079,7 +1001,7 @@ Search.BorderSizePixel = 0
 Search.Text = ""
 
 Search.PlaceholderText =
-	"Search scripts or games..."
+	"Search scripts, games, categories or tags..."
 
 Search.PlaceholderColor3 =
 	Config.Theme.Muted
@@ -1094,10 +1016,10 @@ Search.Font =
 
 Search.ClearTextOnFocus = false
 
-Search.Parent =
-	ScriptsPage
+Search.Parent = ScriptsPage
 
 Corner(Search, 10)
+
 AddStroke(Search, 0.3)
 
 local SearchPadding =
@@ -1109,8 +1031,7 @@ SearchPadding.PaddingLeft =
 SearchPadding.PaddingRight =
 	UDim.new(0, 13)
 
-SearchPadding.Parent =
-	Search
+SearchPadding.Parent = Search
 
 --------------------------------------------------------
 -- SCRIPT SCROLL
@@ -1131,6 +1052,7 @@ ScriptScroll.Size =
 	)
 
 ScriptScroll.BackgroundTransparency = 1
+
 ScriptScroll.BorderSizePixel = 0
 
 ScriptScroll.ScrollBarThickness = 3
@@ -1141,20 +1063,13 @@ ScriptScroll.ScrollBarImageColor3 =
 ScriptScroll.AutomaticCanvasSize =
 	Enum.AutomaticSize.Y
 
-ScriptScroll.CanvasSize =
-	UDim2.new(0, 0, 0, 0)
-
-ScriptScroll.Parent =
-	ScriptsPage
+ScriptScroll.Parent = ScriptsPage
 
 local ScriptLayout =
 	Instance.new("UIListLayout")
 
 ScriptLayout.Padding =
 	UDim.new(0, 9)
-
-ScriptLayout.SortOrder =
-	Enum.SortOrder.LayoutOrder
 
 ScriptLayout.Parent =
 	ScriptScroll
@@ -1178,6 +1093,7 @@ FavoriteScroll.Size =
 	)
 
 FavoriteScroll.BackgroundTransparency = 1
+
 FavoriteScroll.BorderSizePixel = 0
 
 FavoriteScroll.ScrollBarThickness = 3
@@ -1196,9 +1112,6 @@ local FavoriteLayout =
 
 FavoriteLayout.Padding =
 	UDim.new(0, 9)
-
-FavoriteLayout.SortOrder =
-	Enum.SortOrder.LayoutOrder
 
 FavoriteLayout.Parent =
 	FavoriteScroll
@@ -1269,6 +1182,7 @@ local function Notify(
 		NotificationHolder
 
 	Corner(Notification, 11)
+
 	AddStroke(Notification, 0.2)
 
 	local Accent =
@@ -1381,9 +1295,7 @@ local function Notify(
 			Animation.Completed:Wait()
 		end
 
-		if Notification then
-			Notification:Destroy()
-		end
+		Notification:Destroy()
 	end)
 end
 
@@ -1395,14 +1307,7 @@ local function IsFavorite(Id)
 	return State.Favorites[Id] == true
 end
 
-local RefreshFavorites
-
 local function ToggleFavorite(Data)
-
-	if not Data or not Data.name then
-		return
-	end
-
 	State.Favorites[Data.name] =
 		not State.Favorites[Data.name]
 
@@ -1427,45 +1332,23 @@ end
 -- SEARCH
 --------------------------------------------------------
 
-local function Matches(
-	Data,
-	Query
-)
-
-	if type(Data) ~= "table" then
-		return false
-	end
-
-	Query =
-		string.lower(
-			tostring(Query or "")
-		)
+local function Matches(Data, Query)
 
 	if Query == "" then
 		return true
 	end
 
-	local Name =
-		string.lower(
-			tostring(Data.name or "")
-		)
-
-	local Game =
-		string.lower(
-			tostring(Data.game or "")
-		)
-
-	local Description =
-		string.lower(
-			tostring(Data.description or "")
-		)
+	Query =
+		string.lower(Query)
 
 	local Text =
-		Name
-		.. " "
-		.. Game
-		.. " "
-		.. Description
+		string.lower(
+			Data.name
+				.. " "
+				.. Data.game
+				.. " "
+				.. Data.description
+		)
 
 	return string.find(
 		Text,
@@ -1476,67 +1359,22 @@ local function Matches(
 end
 
 --------------------------------------------------------
--- CLEAR LIST
+-- CLEAR
 --------------------------------------------------------
 
 local function ClearList(Parent)
 
-	for _, Object in ipairs(
-		Parent:GetChildren()
-	) do
+	for _, Object in
+		ipairs(Parent:GetChildren()) do
 
 		if not Object:IsA(
 			"UIListLayout"
 		) then
 
 			Object:Destroy()
+
 		end
 	end
-end
-
---------------------------------------------------------
--- LOCAL MODULE EXECUTOR
---------------------------------------------------------
--- Each entry points to a ModuleScript in:
--- ReplicatedStorage > LucritScripts > Modules
--- The ModuleScript should return a function.
--- Remote code downloading/execution is intentionally not used.
-
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
-local function ExecuteScript(Data)
-	if type(Data) ~= "table" then
-		return false, "Invalid script data"
-	end
-
-	local ModuleName = Data.module
-	if type(ModuleName) ~= "string" or ModuleName == "" then
-		return false, "No local ModuleScript is configured"
-	end
-
-	local Root = ReplicatedStorage:FindFirstChild("LucritScripts")
-	local Modules = Root and Root:FindFirstChild("Modules")
-	local Module = Modules and Modules:FindFirstChild(ModuleName)
-
-	if not Module or not Module:IsA("ModuleScript") then
-		return false, "Missing ModuleScript: " .. ModuleName
-	end
-
-	local Success, Result = pcall(require, Module)
-	if not Success then
-		return false, tostring(Result)
-	end
-
-	if type(Result) ~= "function" then
-		return false, "ModuleScript must return a function"
-	end
-
-	local Ran, Error = pcall(Result)
-	if not Ran then
-		return false, tostring(Error)
-	end
-
-	return true
 end
 
 --------------------------------------------------------
@@ -1548,19 +1386,8 @@ local function CreateScriptCard(
 	Parent
 )
 
-	if type(Data) ~= "table" then
-		return
-	end
-
-	if type(Data.name) ~= "string" then
-		return
-	end
-
 	local Card =
 		Instance.new("Frame")
-
-	Card.Name =
-		"ScriptCard"
 
 	Card.Size =
 		UDim2.new(
@@ -1578,6 +1405,7 @@ local function CreateScriptCard(
 	Card.Parent = Parent
 
 	Corner(Card, 12)
+
 	AddStroke(Card, 0.3)
 
 	----------------------------------------------------
@@ -1615,6 +1443,7 @@ local function CreateScriptCard(
 
 	IconGradient.Color =
 		ColorSequence.new({
+
 			ColorSequenceKeypoint.new(
 				0,
 				Config.Theme.Primary
@@ -1624,10 +1453,12 @@ local function CreateScriptCard(
 				1,
 				Config.Theme.Purple
 			),
+
 		})
 
 	IconGradient.Transparency =
 		NumberSequence.new({
+
 			NumberSequenceKeypoint.new(
 				0,
 				0.82
@@ -1637,6 +1468,7 @@ local function CreateScriptCard(
 				1,
 				0.92
 			),
+
 		})
 
 	IconGradient.Parent = Icon
@@ -1700,7 +1532,7 @@ local function CreateScriptCard(
 	local Game =
 		MakeLabel(
 			Card,
-			Data.game or "Unknown Game",
+			Data.game,
 			11,
 			Config.Theme.Primary,
 			Enum.Font.GothamMedium
@@ -1727,7 +1559,7 @@ local function CreateScriptCard(
 	local Description =
 		MakeLabel(
 			Card,
-			Data.description or "No description provided.",
+			Data.description,
 			10,
 			Config.Theme.Muted,
 			Enum.Font.Gotham
@@ -1748,6 +1580,7 @@ local function CreateScriptCard(
 		)
 
 	Description.TextWrapped = true
+
 	Description.TextYAlignment =
 		Enum.TextYAlignment.Top
 
@@ -1758,24 +1591,21 @@ local function CreateScriptCard(
 	local StatusLabel =
 		MakeLabel(
 			Card,
-			"● READY",
+			"● ONLINE",
 			10,
 			Config.Theme.Success,
 			Enum.Font.GothamMedium
 		)
 
 	StatusLabel.AnchorPoint =
-		Vector2.new(
-			1,
-			0
-		)
+		Vector2.new(1, 0)
 
 	StatusLabel.Position =
 		UDim2.new(
 			1,
 			-14,
-			0,
-			12
+			12,
+			0
 		)
 
 	StatusLabel.Size =
@@ -1795,10 +1625,7 @@ local function CreateScriptCard(
 		Instance.new("TextButton")
 
 	Favorite.AnchorPoint =
-		Vector2.new(
-			1,
-			1
-		)
+		Vector2.new(1, 1)
 
 	Favorite.Position =
 		UDim2.new(
@@ -1839,6 +1666,7 @@ local function CreateScriptCard(
 	Favorite.Parent = Card
 
 	Corner(Favorite, 8)
+
 	AddStroke(Favorite, 0.35)
 
 	Favorite.MouseEnter:Connect(
@@ -1890,31 +1718,25 @@ local function CreateScriptCard(
 				and Config.Theme.Warning
 				or Config.Theme.Text
 
-			if State.Page == "Favorites" then
+			if State.Page ==
+				"Favorites" then
 
-				task.wait()
+				task.wait(0.05)
 
-				if RefreshFavorites then
-					RefreshFavorites()
-				end
-
+				RefreshFavorites()
 			end
-
 		end
 	)
 
 	----------------------------------------------------
-	-- SELECT / VIEW
+	-- SELECT
 	----------------------------------------------------
 
 	local Select =
 		Instance.new("TextButton")
 
 	Select.AnchorPoint =
-		Vector2.new(
-			1,
-			1
-		)
+		Vector2.new(1, 1)
 
 	Select.Position =
 		UDim2.new(
@@ -1933,8 +1755,7 @@ local function CreateScriptCard(
 	Select.BackgroundColor3 =
 		Config.Theme.Primary
 
-	Select.Text =
-		"EXECUTE"
+	Select.Text = "SELECT"
 
 	Select.TextColor3 =
 		Color3.new(
@@ -1986,33 +1807,59 @@ local function CreateScriptCard(
 		end
 	)
 
-	Select.MouseButton1Click:Connect(function()
-		local Success, ErrorMessage = ExecuteScript(Data)
+	Select.MouseButton1Click:Connect(
+		function()
 
-		if Success then
-			Select.Text = "EXECUTED"
-			Select.BackgroundColor3 = Config.Theme.Success
-			task.delay(1.25, function()
-				if Select and Select.Parent then
-					Select.Text = "EXECUTE"
-					Select.BackgroundColor3 = Config.Theme.Primary
+			if type(Data.loadstring) ~= "string" or Data.loadstring:gsub("%s", "") == "" then
+				Notify(
+					"Load failed",
+					Data.name .. " does not have a valid loader."
+				)
+				return
+			end
+
+			Notify(
+				"Loading script",
+				Data.name .. " is being loaded..."
+			)
+
+			local Loader = loadstring
+
+			if type(Loader) ~= "function" then
+				Notify(
+					"Load failed",
+					"loadstring is not available in this environment."
+				)
+				return
+			end
+
+			local Success, Result = pcall(function()
+				local Chunk, CompileError = Loader(Data.loadstring)
+
+				if not Chunk then
+					error(CompileError or "Unable to compile loader")
 				end
+
+				return Chunk()
 			end)
-		else
-			Select.Text = "NOT READY"
-			Select.BackgroundColor3 = Config.Theme.Warning
-			warn("Lucrit Scripts: " .. tostring(ErrorMessage))
-			task.delay(1.75, function()
-				if Select and Select.Parent then
-					Select.Text = "EXECUTE"
-					Select.BackgroundColor3 = Config.Theme.Primary
-				end
-			end)
+
+			if Success then
+				Notify(
+					"Script loaded",
+					Data.name .. " loaded successfully."
+				)
+			else
+				Notify(
+					"Load failed",
+					Data.name .. " failed to load: " .. tostring(Result)
+				)
+			end
+
 		end
-	end)
+	)
 
 	----------------------------------------------------
-	-- HOVER
+	-- CARD HOVER
 	----------------------------------------------------
 
 	Card.MouseEnter:Connect(
@@ -2058,13 +1905,12 @@ end
 
 local function RenderScripts()
 
-	ClearList(
-		ScriptScroll
-	)
+	ClearList(ScriptScroll)
 
 	local Found = 0
 
-	for _, Data in ipairs(Scripts) do
+	for _, Data in
+		ipairs(Scripts) do
 
 		if Matches(
 			Data,
@@ -2108,15 +1954,14 @@ end
 -- RENDER FAVORITES
 --------------------------------------------------------
 
-RefreshFavorites = function()
+function RefreshFavorites()
 
-	ClearList(
-		FavoriteScroll
-	)
+	ClearList(FavoriteScroll)
 
 	local Found = 0
 
-	for _, Data in ipairs(Scripts) do
+	for _, Data in
+		ipairs(Scripts) do
 
 		if IsFavorite(Data.name) then
 
@@ -2207,23 +2052,17 @@ local NavigationData = {
 
 local function Navigate(Name)
 
-	if not PageObjects[Name] then
-		return
-	end
-
 	State.Page = Name
 
-	for PageName, Page in pairs(
-		PageObjects
-	) do
+	for PageName, Page in
+		pairs(PageObjects) do
 
 		Page.Visible =
 			PageName == Name
 	end
 
-	for ButtonName, Button in pairs(
-		NavigationButtons
-	) do
+	for ButtonName, Button in
+		pairs(NavigationButtons) do
 
 		if ButtonName == Name then
 
@@ -2261,19 +2100,16 @@ local function Navigate(Name)
 	end
 
 	if Name == "Favorites" then
-
 		RefreshFavorites()
-
 	end
 end
 
 --------------------------------------------------------
--- NAVIGATION BUTTONS
+-- NAV BUTTONS
 --------------------------------------------------------
 
-for Index, Item in ipairs(
-	NavigationData
-) do
+for Index, Item in
+	ipairs(NavigationData) do
 
 	local Button =
 		Instance.new("TextButton")
@@ -2319,10 +2155,7 @@ for Index, Item in ipairs(
 		Instance.new("UIPadding")
 
 	Padding.PaddingLeft =
-		UDim.new(
-			0,
-			12
-		)
+		UDim.new(0, 12)
 
 	Padding.Parent =
 		Button
@@ -2330,7 +2163,8 @@ for Index, Item in ipairs(
 	Button.MouseEnter:Connect(
 		function()
 
-			if State.Page ~= Item.Name then
+			if State.Page ~=
+				Item.Name then
 
 				Tween(
 					Button,
@@ -2346,13 +2180,15 @@ for Index, Item in ipairs(
 				)
 
 			end
+
 		end
 	)
 
 	Button.MouseLeave:Connect(
 		function()
 
-			if State.Page ~= Item.Name then
+			if State.Page ~=
+				Item.Name then
 
 				Tween(
 					Button,
@@ -2364,16 +2200,13 @@ for Index, Item in ipairs(
 				)
 
 			end
+
 		end
 	)
 
 	Button.MouseButton1Click:Connect(
 		function()
-
-			Navigate(
-				Item.Name
-			)
-
+			Navigate(Item.Name)
 		end
 	)
 
@@ -2412,10 +2245,7 @@ local SettingsLayout =
 	Instance.new("UIListLayout")
 
 SettingsLayout.Padding =
-	UDim.new(
-		0,
-		8
-	)
+	UDim.new(0, 8)
 
 SettingsLayout.Parent =
 	SettingsContainer
@@ -2458,26 +2288,20 @@ local function SettingButton(Text)
 		SettingsContainer
 
 	Corner(Button, 9)
+
 	AddStroke(Button, 0.35)
 
 	local Padding =
 		Instance.new("UIPadding")
 
 	Padding.PaddingLeft =
-		UDim.new(
-			0,
-			14
-		)
+		UDim.new(0, 14)
 
 	Padding.Parent =
 		Button
 
 	return Button
 end
-
---------------------------------------------------------
--- ANIMATIONS SETTING
---------------------------------------------------------
 
 local AnimationButton =
 	SettingButton(
@@ -2498,12 +2322,13 @@ AnimationButton.MouseButton1Click:Connect(
 				or "OFF"
 			)
 
+		Notify(
+			"Settings updated",
+			"Animation setting changed."
+		)
+
 	end
 )
-
---------------------------------------------------------
--- EFFECTS SETTING
---------------------------------------------------------
 
 local EffectsButton =
 	SettingButton(
@@ -2527,12 +2352,13 @@ EffectsButton.MouseButton1Click:Connect(
 				or "OFF"
 			)
 
+		Notify(
+			"Settings updated",
+			"Background effects changed."
+		)
+
 	end
 )
-
---------------------------------------------------------
--- SOUND SETTING
---------------------------------------------------------
 
 local SoundButton =
 	SettingButton(
@@ -2553,12 +2379,13 @@ SoundButton.MouseButton1Click:Connect(
 				or "OFF"
 			)
 
+		Notify(
+			"Settings updated",
+			"Sound setting changed."
+		)
+
 	end
 )
-
---------------------------------------------------------
--- SCALE SETTING
---------------------------------------------------------
 
 local ScaleButton =
 	SettingButton(
@@ -2598,7 +2425,6 @@ ScaleButton.MouseButton1Click:Connect(
 
 			Scale.Parent =
 				Window
-
 		end
 
 		Tween(
@@ -2612,10 +2438,6 @@ ScaleButton.MouseButton1Click:Connect(
 
 	end
 )
-
---------------------------------------------------------
--- RESET
---------------------------------------------------------
 
 local ResetButton =
 	SettingButton(
@@ -2662,7 +2484,7 @@ ResetButton.MouseButton1Click:Connect(
 )
 
 --------------------------------------------------------
--- INFO PAGE
+-- INFO
 --------------------------------------------------------
 
 local InfoCard =
@@ -2679,7 +2501,7 @@ InfoCard.Size =
 		1,
 		-20,
 		0,
-		245
+		225
 	)
 
 InfoCard.BackgroundColor3 =
@@ -2691,6 +2513,7 @@ InfoCard.Parent =
 	InfoPage
 
 Corner(InfoCard, 13)
+
 AddStroke(InfoCard, 0.3)
 
 local InfoTitle =
@@ -2728,10 +2551,9 @@ local InfoText =
 			.. #Scripts
 			.. "\n"
 			.. "Status: Online\n\n"
-			.. "This hub is a script library. "
-			.. "Use the View button to inspect "
-			.. "the source associated with each "
-			.. "entry before using it.",
+			.. "Add new resources by editing "
+			.. "the Scripts table at the top of "
+			.. "this file.",
 
 	11,
 
@@ -2751,15 +2573,16 @@ InfoText.Size =
 		1,
 		-40,
 		0,
-		170
+		145
 	)
 
 InfoText.TextWrapped = true
+
 InfoText.TextYAlignment =
 	Enum.TextYAlignment.Top
 
 --------------------------------------------------------
--- RESPONSIVE SCALE
+-- RESPONSIVE UI
 --------------------------------------------------------
 
 local ResponsiveScale =
@@ -2786,12 +2609,12 @@ local function UpdateScale()
 	if Viewport.X < 600 then
 
 		ResponsiveScale.Scale =
-			0.62
+			0.70
 
 	elseif Viewport.X < 850 then
 
 		ResponsiveScale.Scale =
-			0.78
+			0.84
 
 	else
 
@@ -2801,18 +2624,11 @@ local function UpdateScale()
 	end
 end
 
-local Camera =
-	workspace.CurrentCamera
-
-if Camera then
-
-	Camera:GetPropertyChangedSignal(
+workspace.CurrentCamera:
+	GetPropertyChangedSignal(
 		"ViewportSize"
-	):Connect(
-		UpdateScale
-	)
-
-end
+	):
+	Connect(UpdateScale)
 
 UpdateScale()
 
@@ -2820,47 +2636,43 @@ UpdateScale()
 -- DRAGGING
 --------------------------------------------------------
 
-local Dragging = false
-local DragStart = nil
-local StartPosition = nil
+local PlayerGui = Player:WaitForChild("PlayerGui")
 
-local function IsInteractive(Object)
+local function IsInteractive(HitObject)
 
-	if not Object then
+	if not HitObject then
 		return false
 	end
 
-	return Object:IsA("TextButton")
-		or Object:IsA("ImageButton")
-		or Object:IsA("TextBox")
+	return HitObject:IsA("TextButton")
+		or HitObject:IsA("ImageButton")
+		or HitObject:IsA("TextBox")
 end
+
+local Dragging = false
+local DragStart
+local StartPosition
 
 Window.InputBegan:Connect(
 	function(Input)
 
-		if
-			Input.UserInputType
-			~= Enum.UserInputType.MouseButton1
+		if Input.UserInputType ~=
+			Enum.UserInputType.MouseButton1
 			and
-			Input.UserInputType
-			~= Enum.UserInputType.Touch
-		then
+			Input.UserInputType ~=
+			Enum.UserInputType.Touch then
+
 			return
 		end
 
-		local Objects =
+		local HitObjects =
 			PlayerGui:GetGuiObjectsAtPosition(
 				Input.Position.X,
 				Input.Position.Y
 			)
 
-		for _, Object in ipairs(
-			Objects
-		) do
-
-			if IsInteractive(Object) then
-				return
-			end
+		if IsInteractive(HitObjects[1]) then
+			return
 		end
 
 		Dragging = true
@@ -2870,25 +2682,20 @@ Window.InputBegan:Connect(
 
 		StartPosition =
 			Window.Position
-
 	end
 )
 
 Window.InputEnded:Connect(
 	function(Input)
 
-		if
-			Input.UserInputType
-			== Enum.UserInputType.MouseButton1
+		if Input.UserInputType ==
+			Enum.UserInputType.MouseButton1
 			or
-			Input.UserInputType
-			== Enum.UserInputType.Touch
-		then
+			Input.UserInputType ==
+			Enum.UserInputType.Touch then
 
 			Dragging = false
-
 		end
-
 	end
 )
 
@@ -2899,17 +2706,12 @@ UserInputService.InputChanged:Connect(
 			return
 		end
 
-		if
-			Input.UserInputType
-			~= Enum.UserInputType.MouseMovement
+		if Input.UserInputType ~=
+			Enum.UserInputType.MouseMovement
 			and
-			Input.UserInputType
-			~= Enum.UserInputType.Touch
-		then
-			return
-		end
+			Input.UserInputType ~=
+			Enum.UserInputType.Touch then
 
-		if not DragStart or not StartPosition then
 			return
 		end
 
@@ -2927,7 +2729,6 @@ UserInputService.InputChanged:Connect(
 				StartPosition.Y.Offset
 					+ Delta.Y
 			)
-
 	end
 )
 
@@ -2940,9 +2741,7 @@ task.spawn(
 
 		while Gui.Parent do
 
-			if State.Effects
-				and Glow.Parent
-			then
+			if State.Effects then
 
 				local Time =
 					os.clock()
@@ -2969,13 +2768,10 @@ task.spawn(
 					+ math.sin(
 						Time * 0.7
 					) * 0.015
-
 			end
 
 			task.wait(0.04)
-
 		end
-
 	end
 )
 
@@ -3017,14 +2813,10 @@ task.delay(
 	0.7,
 	function()
 
-		if Gui.Parent then
-
-			Notify(
-				"Welcome to Lucrit",
-				"Lucrit Scripts is online."
-			)
-
-		end
+		Notify(
+			"Welcome to Lucrit",
+			"Lucrit Scripts is online."
+		)
 
 	end
 )
